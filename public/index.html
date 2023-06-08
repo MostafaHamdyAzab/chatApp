@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Chat App</h2>
+    <button onclick="send1()"> Send REQ</button>
+    <button onclick="join()"> Join</button>
+    <button onclick="send()"> Send </button>
+
+    <script src="/socket.io/socket.io.js"></script>   <!-- this fikle is serve static -->
+
+    <script>
+        let socket=io();
+        socket.on("connect",()=>{
+            console.log("The Client Connected");
+        });
+        socket.on("serverEventToWhomNotClicked",()=>{
+            console.log("serverEventToWhomNotClicked Received")
+        });
+
+        function send1(){
+            console.log("Client Send the Request");
+            socket.emit("azabEvent",{
+                name:"Azab",
+                age:25
+            });
+         }
+   
+         socket.on("newMsg",()=>{   //must click join first
+            console.log("msg Received")
+         });
+
+         function join(){
+            socket.emit("joinRoom");
+        };
+        
+         function send(){
+            socket.emit("sentMsg");
+         }
+   
+   </script>
+   
+    
+</body>
+</html>
